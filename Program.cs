@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using RDP_DVC_Watcher;
+
+ETWListener.TestListen();
+Console.WriteLine("done");
+Console.ReadLine();
