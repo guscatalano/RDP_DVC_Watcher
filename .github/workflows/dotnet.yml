@@ -35,7 +35,7 @@ jobs:
 
     - name: Zip published app
       run: |
-        powershell Compress-Archive -Path ./publish/* -DestinationPath ./my_app.zip
+        powershell Compress-Archive -Path ./publish/* -DestinationPath ./rdpdvcwatcher.zip
 
     - name: Get latest tag
       id: get_latest_tag
@@ -90,6 +90,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./my_app.zip
-        asset_name: my_app.zip
+        asset_path: ./rdpdvcwatcher.zip
+        asset_name: rdpdvcwatcher.zip
         asset_content_type: application/zip
