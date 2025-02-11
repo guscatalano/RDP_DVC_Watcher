@@ -31,7 +31,8 @@ jobs:
       run: dotnet publish -c Release -o ./publish
 
     - name: Zip published app
-      run: zip -r my_app.zip ./publish 
+      run: |
+        powershell Compress-Archive -Path ./publish/* -DestinationPath ./my_app.zip
 
     - name: Create Release
       id: create_release
