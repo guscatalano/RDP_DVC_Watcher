@@ -2,4 +2,5 @@
 
 This shows you (some) but not all of the DVC traffic on the RDP server. It does not work from the client
 
-![image](https://github.com/user-attachments/assets/bc97100b-6429-4345-b09c-f18b6e0cf5ca)
+![ezgif-4a78b63e0738dd](https://github.com/user-attachments/assets/4e928400-1791-4375-8c9a-ba24c9e8801f)
+
