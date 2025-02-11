@@ -78,8 +78,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ steps.extract_tag.outputs.TAG_NAME }}
-        release_name: Release ${{ steps.extract_tag.outputs.TAG_NAME }}
+        tag_name: ${{ steps.increment_tag.outputs.NEW_TAG }}
+        release_name: Release ${{ steps.increment_tag.outputs.NEW_TAG }}
         draft: false
         prerelease: false
 
