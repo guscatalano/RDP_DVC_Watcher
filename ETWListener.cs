@@ -20,9 +20,7 @@ namespace RDP_DVC_Watcher
             {
                 KS.EnableProvider("8375996d-5801-4fe9-b0ae-f5c428758960");
 
-#pragma warning disable CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
-                Console.CancelKeyPress += delegate (object s, ConsoleCancelEventArgs e) { KS.Dispose(); };
-#pragma warning restore CS8622 // Nullability of reference types in type of parameter doesn't match the target delegate (possibly because of nullability attributes).
+                Console.CancelKeyPress += (s, e) => KS.Dispose();
 
                 KS.Source.Dynamic.All += Dynamic_All;
                 Console.WriteLine("Started listening");
