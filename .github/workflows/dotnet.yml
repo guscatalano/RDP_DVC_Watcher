@@ -31,7 +31,7 @@ jobs:
       run: dotnet publish -c Release -o ./publish
 
     - name: Zip published app
-      run: zip -r my_app.zip ./publish
+      run: zip -r my_app.zip ./publish 
 
     - name: Create Release
       id: create_release
