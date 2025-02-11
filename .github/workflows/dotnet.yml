@@ -39,35 +39,38 @@ jobs:
     - name: Get latest tag
       id: get_latest_tag
       run: |
-        git fetch --tags
-        TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
-        echo ::set-output name=LATEST_TAG::$TAG
+          git fetch --tags
+          $latestTag = git tag --list --sort=-v:refname | Select-Object -First 1
+          if (-not $latestTag) {
+            $latestTag = "none"
+          }
+          echo "::set-output name=LATEST_TAG::$latestTag"
   
     - name: Increment tag
       id: increment_tag
       run: |
-          LATEST_TAG=${{ steps.get_latest_tag.outputs.LATEST_TAG }}
-          echo "Latest tag: $LATEST_TAG"
-          if [ -z "$LATEST_TAG" ]; then
-            NEW_TAG="v1.0.0"
-          else
-            IFS='.' read -r -a TAG_PARTS <<< "${LATEST_TAG#v}"
-            MAJOR=${TAG_PARTS[0]}
-            MINOR=${TAG_PARTS[1]}
-            PATCH=${TAG_PARTS[2]}
-            PATCH=$((PATCH + 1))
-            NEW_TAG="v$MAJOR.$MINOR.$PATCH"
-          fi
-          echo "New tag: $NEW_TAG"
-          echo ::set-output name=NEW_TAG::$NEW_TAG
+          $latestTag = "${{ steps.get_latest_tag.outputs.LATEST_TAG }}"
+          echo "Latest tag: $latestTag"
+          if ($latestTag -eq "none") {
+            $newTag = "v1.0.0"
+          } else {
+            $tagParts = $latestTag.TrimStart('v').Split('.')
+            $major = [int]$tagParts[0]
+            $minor = [int]$tagParts[1]
+            $patch = [int]$tagParts[2]
+            $patch++
+            $newTag = "v$major.$minor.$patch"
+          }
+          echo "New tag: $newTag"
+          echo "::set-output name=NEW_TAG::$newTag"
   
     - name: Create and push new tag
       run: |
-          NEW_TAG=${{ steps.increment_tag.outputs.NEW_TAG }}
+          $newTag = "${{ steps.increment_tag.outputs.NEW_TAG }}"
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git tag $NEW_TAG
-          git push origin $NEW_TAG
+          git tag $newTag
+          git push origin $newTag
 
     - name: Create Release
       id: create_release
